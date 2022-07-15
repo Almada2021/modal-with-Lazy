@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# modal react without libraries
+this is a example of implement modal layouts in react
+## Open Modal Function
+~~~
+// all definition
+import React, {Suspense, lazy} from "react";
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+import { createRoot } from "react-dom/client";
 
-## Available Scripts
+export default function openModal (){
 
-In the project directory, you can run:
+    const Modal = lazy(() => import('./Modal'));
 
-### `npm start`
+    const modalDiv = document.createElement('div');
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    modalDiv.id = 'modal';
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    document.body.appendChild(modalDiv)
 
-### `npm test`
+    const root = createRoot(modalDiv);
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    root.render(
 
-### `npm run build`
+        <Suspense fallback={<div>...loading</div>}>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+            <Modal root={root} title="Modal" >openModal</Modal>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+        </Suspense>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    );
 
-### `npm run eject`
+  
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+}
+~~~
+the open modal function is include in a button event. when on click in this button call the function
+## OpenModal behaviour
+~~~
+import React, {Suspense, lazy} from "react";
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+import { createRoot } from "react-dom/client";
+~~~
+the function use Lazy for best performance in  slow networks 
+### using Lazy
+this code controls whether the import is necessary or not
+~~~
+const Modal = lazy(() => import('./Modal'));
+~~~
+### create the modal
+create modal element inside a div
+~~~
+const modalDiv = document.createElement('div');
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+modalDiv.id = 'modal';
+~~~
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### append in root
+add the element with the document API and use for createRoot
 
-## Learn More
+~~~
+    document.body.appendChild(modalDiv)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    const root = createRoot(modalDiv);
+~~~
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### render the component
+in the final of function your use root.render an in this method inside a Suspense Component with fallback  while waiting for it to render
+a special component call modal
+ in this component is styles of the modal
+~~~
+ root.render(
 
-### Code Splitting
+        <Suspense fallback={<div>...loading</div>}>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+            <Modal root={root} title="Modal" >openModal</Modal>
 
-### Analyzing the Bundle Size
+        </Suspense>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    );
+~~~
